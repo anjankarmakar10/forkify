@@ -584,12 +584,10 @@ const coltrolRecipes = async ()=>{
         console.error(error.message);
     }
 };
-[
-    "hashchange",
-    "load"
-].forEach((event)=>{
-    window.addEventListener(event, coltrolRecipes);
-});
+function init() {
+    (0, _recipeViewDefault.default).addHandlerRender(coltrolRecipes);
+}
+init();
 
 },{"core-js/modules/es.regexp.flags.js":"gSXXb","core-js/modules/web.immediate.js":"49tUX","regenerator-runtime/runtime":"dXNgZ","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./model":"Y4A21","./views/recipeView":"l60JC","regenerator-runtime":"dXNgZ"}],"gSXXb":[function(require,module,exports) {
 var global = require("818980caf7f49596");
@@ -2690,6 +2688,14 @@ class RecipeView {
         this.#prentElement.innerHTML = "";
         this.#prentElement.insertAdjacentHTML("afterbegin", markup);
     };
+    addHandlerRender(handler) {
+        [
+            "hashchange",
+            "load"
+        ].forEach((event)=>{
+            window.addEventListener(event, handler);
+        });
+    }
     #generateMarkup() {
         return `
         <figure class="recipe__fig">
