@@ -28,7 +28,8 @@ const coltrolRecipes = async () => {
     // render the recipe
     recipeView.render(model.state.recipe);
   } catch (error) {
-    console.error(error.message);
+
+    recipeView.renderMessage();
   }
 };
 
