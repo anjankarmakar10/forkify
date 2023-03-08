@@ -1,10 +1,16 @@
 import * as model from './model';
 import recipeView from './views/recipeView';
 import searchView from './views/searchView';
+import resultsView from './views/resultsView';
 
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 import { async } from 'regenerator-runtime';
+
+// this condition not clear the ui state  save to reload
+if (module.hot) {
+  module.hot.accept();
+}
 
 const coltrolRecipes = async () => {
   try {
@@ -26,6 +32,8 @@ const coltrolRecipes = async () => {
 
 const controlSearchResults = async () => {
   try {
+    resultsView.renderSpnier();
+
     // get search query
     const query = searchView.getQuery();
     if (!query) return;
@@ -33,8 +41,13 @@ const controlSearchResults = async () => {
     //load search results
     await model.loadSearchResults(query);
 
+    resultsView._clear();
+
+    const data = model.state.search.results;
+
     //render reuslt
-    console.log(model.state.search);
+    console.log(data);
+    resultsView.render(data);
   } catch (error) {
     console.error(error);
   }
